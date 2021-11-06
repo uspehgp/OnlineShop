@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-// import { AuthService } from 'src/app/shared/auth.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from "../../shared/auth.service";
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +13,7 @@ export class LoginPageComponent implements OnInit {
   submitted = false
 
   constructor(
-    // public auth: AuthService,
+    public auth: AuthService,
     private router: Router,
   ) { }
 
@@ -31,23 +31,22 @@ export class LoginPageComponent implements OnInit {
 
     this.submitted = true
 
-    // const user = {
-    //   email: this.form.value.email,
-    //   password: this.form.value.password,
-    //   returnSecureToken: true
-    // }
+    const user = {
+      email: this.form.value.email,
+      password: this.form.value.password,
+      returnSecureToken: true
+    }
 
-    // this.auth.login(user).subscribe( res => {
-    //   console.log(res)
-    //   this.form.reset
-    //   this.router.navigate(['/admin','dashboard'])
-    //   this.submitted = false
-    //
-    // }, () => {
-    //   this.submitted = false
-    // }
+    this.auth.login(user).subscribe( () => {
+      this.form.reset
+      this.router.navigate(['/admin','dashboard'])
+      this.submitted = false
 
-    // )
+    }, () => {
+      this.submitted = false
+    }
+
+    )
 
   }
 
