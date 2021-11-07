@@ -15,17 +15,18 @@ export class LoginPageComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private router: Router,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-     })
+    })
   }
 
   submit() {
-    if (  this.form.invalid ) {
+    if (this.form.invalid) {
       return;
     }
 
@@ -37,15 +38,15 @@ export class LoginPageComponent implements OnInit {
       returnSecureToken: true
     }
 
-    this.auth.login(user).subscribe( () => {
-      this.form.reset
-      this.router.navigate(['/admin','dashboard'])
-      this.submitted = false
+    this.auth.login(user).subscribe((res) => {
+        console.log(res);
+        this.form.reset;
+        this.router.navigate(['/admin', 'dashboard']);
+        this.submitted = false;
 
-    }, () => {
-      this.submitted = false
-    }
-
+      }, () => {
+        this.submitted = false
+      }
     )
 
   }
