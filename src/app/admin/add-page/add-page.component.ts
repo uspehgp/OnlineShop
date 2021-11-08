@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ProductService} from "../../shared/product.service";
 
 @Component({
@@ -12,7 +12,8 @@ export class AddPageComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  constructor(private productServ: ProductService) { }
+  constructor(private productServ: ProductService) {
+  }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -28,6 +29,7 @@ export class AddPageComponent implements OnInit {
     if (this.form.invalid) {
       return
     }
+    this.submitted = true;
 
     const product = {
       type: this.form.value.type,
@@ -39,7 +41,9 @@ export class AddPageComponent implements OnInit {
     }
 
     console.log(this.form)
-    this.productServ.create(product).subscribe(res => console.log(res))
+    this.productServ.create(product).subscribe(res => console.log(res));
+    this.form.reset();
+    this.submitted = false;
   }
 
 }
