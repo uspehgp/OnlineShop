@@ -1,23 +1,19 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {map} from "rxjs/operators";
-import {FbResponse} from "./interfaces";
-
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
+import { FbResponse, Product } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-
-  constructor(private http: HttpClient
-  ) {
-  }
+  constructor(private  http : HttpClient) { }
 
   create(product) {
-    return this.http.post(`${environment.fbDbUrl}/product.json`, product)
-      .pipe(map((res: FbResponse) => {
+    return this.http.post(`${environment.fbDbUrl}/products.json`, product)
+      .pipe(map( (res : FbResponse) => {
         return {
           ...product,
           id: res.name,
@@ -37,5 +33,16 @@ export class ProductService {
           }))
       }))
   }
-}
 
+  getById(id) {
+    return this.http.get(`${environment.fbDbUrl}/product/${id}.json`)
+      .pipe( map ( (res: Product) => {
+        return {
+          ...res,
+          id,
+          date: new Date(res.date)
+        }
+      }))
+  }
+
+}
