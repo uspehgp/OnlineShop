@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductService} from "../../shared/product.service";
+
 import {Subscription} from "rxjs";
 
 @Component({
@@ -12,6 +13,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   products = [];
   rSub: Subscription;
   pSub: Subscription;
+  productName: any;
 
   constructor(private productServ: ProductService) {
   }
